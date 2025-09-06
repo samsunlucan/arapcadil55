@@ -14,7 +14,7 @@ interface SrsDao {
     fun getDueEntries(time: Long): Flow<List<SrsEntry>>
 
     @Transaction
-    @Query("SELECT s.id AS id, s.contentId AS contentId, s.contentType AS contentType, s.box AS box, s.lastReviewed AS lastReviewed, s.nextReview AS nextReview, c.id AS id, c.title AS title, c.text AS text, c.language AS language, c.transliteration AS transliteration FROM srs_entry s JOIN culture_content c ON s.contentId = c.id WHERE s.nextReview <= :time ORDER BY s.nextReview ASC")
+    @Query("SELECT * FROM srs_entry WHERE nextReview <= :time ORDER BY nextReview ASC")
     fun getDueWithContent(time: Long): Flow<List<SrsWithContent>>
 
     @Query("SELECT * FROM srs_entry WHERE contentId = :contentId AND contentType = :contentType LIMIT 1")

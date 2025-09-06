@@ -40,7 +40,7 @@ abstract class AppDatabase : RoomDatabase() {
                     "app_database"
                 )
                     .addMigrations(*DatabaseMigrations.ALL)
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration(true)
                     .build()
 
                 // Assign singleton
