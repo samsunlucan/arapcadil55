@@ -37,6 +37,9 @@ android {
     buildFeatures {
         compose = true
     }
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
 }
 
 kotlin {
@@ -61,6 +64,8 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     add("ksp", libs.androidx.room.compiler)
+    add("kspTest", libs.androidx.room.compiler)
+    add("kspAndroidTest", libs.androidx.room.compiler)
 
     // Navigation, ViewModel Compose
     implementation(libs.androidx.navigation.compose)
@@ -74,15 +79,21 @@ dependencies {
     implementation(libs.androidx.work.runtime.ktx)
 
     testImplementation(libs.junit)
-    // Room testing helpers
-    testImplementation(libs.androidx.room.testing)
+    // Room testing helpers (androidTest’te de kullanılıyor)
+    testImplementation("androidx.room:room-testing:2.7.2")
+    // Robolectric ve test yardımcıları
+    testImplementation("org.robolectric:robolectric:4.13")
+    testImplementation("androidx.test:core:1.6.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     // Room androidTest helpers
-    androidTestImplementation(libs.androidx.room.testing)
+    androidTestImplementation("androidx.room:room-testing:2.7.2")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
+    androidTestImplementation("androidx.test:core:1.6.1")
 
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
